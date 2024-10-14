@@ -1,0 +1,17 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  color: black;
+  background-color: whitesmoke;
+
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-height: 0;
+  width: 100%;
+  overflow-x:hidden;
+}
+

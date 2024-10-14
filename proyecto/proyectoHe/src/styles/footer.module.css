@@ -1,0 +1,28 @@
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative; 
+    bottom: 0; 
+    width: 100%; 
+}
+
+.container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+.socialLinks {
+    margin-top: 10px; 
+}
+
+.socialLinks a {
+    color: white; 
+    margin: 0 10px; 
+    text-decoration: none; 
+}
+
+.socialLinks a:hover {
+    text-decoration: underline; 
+}

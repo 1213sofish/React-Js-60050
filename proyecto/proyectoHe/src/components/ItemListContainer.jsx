@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from "react"
+import mockProducts from "../assets/mockData.json"
+import ItemList from "./ItemList"
+import { useParams } from "react-router-dom"
+import styles from "../styles/itemListContainer.module.css"
 
-const ItemListContainer = ({ greeting }) => {
-    const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    backgroundColor: '#f5f5f5',
-    fontSize: '24px',
-    color: '#333',
-    };
+const ItemListContainer = () => {
+    const [products, setProducts] = useState([]);
+    const { categoryId } = useParams();
+
+    useEffect(() => {
+        let productsFiltered;
+        if (categoryId) {
+            productsFiltered = mockProducts.filter(product => product.category.toLowerCase() === categoryId.toLowerCase());
+        } else {
+            productsFiltered = mockProducts;
+        }
+        setProducts(productsFiltered);
+    }, [categoryId]);
 
     return (
-    <div style={containerStyle}>
-        {greeting}
-    </div>
+        <div className={styles.container}>
+            <h1 className={styles.title}>{categoryId ? `Categoría: ${categoryId}` : 'Todos los productos'}</h1>
+            <ItemList products={products} />
+        </div>
     );
-};
+}
 
-export default ItemListContainer;
+export default ItemListContainer
