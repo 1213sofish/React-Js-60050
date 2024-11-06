@@ -1,13 +1,13 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { CartContext } from '../context/CartContext';
-import '../styles/checkout.css';
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { CartContext } from '../context/CartContext'
+import '../styles/checkout.css'
 
 const Checkout = () => {
     const navigate = useNavigate();
-    const { cart, clearCart } = useContext(CartContext);  // Cart context
-    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);  // Total price of cart
+    const { cart, clearCart } = useContext(CartContext);  
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);  
 
     const [formData, setFormData] = useState({
         nombre: '',
@@ -71,9 +71,9 @@ const Checkout = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Save the order to localStorage (or mock JSON)
+                // Save
                 const newOrder = {
-                    orderId: new Date().getTime(), // Unique orderId based on timestamp
+                    orderId: new Date().getTime(), 
                     customer: formData,
                     cart,
                     totalPrice,
@@ -83,9 +83,9 @@ const Checkout = () => {
                 // Store order in localStorage
                 const orders = JSON.parse(localStorage.getItem('orders')) || [];
                 orders.push(newOrder);
-                localStorage.setItem('orders', JSON.stringify(orders));  // Save orders array to localStorage
+                localStorage.setItem('orders', JSON.stringify(orders));  
 
-                // Clear the cart after purchase
+                // Clear
                 clearCart();
 
                 // Show success message and redirect
@@ -95,7 +95,7 @@ const Checkout = () => {
                     icon: 'success',
                     confirmButtonText: 'Aceptar',
                 }).then(() => {
-                    navigate('/'); // Redirect to homepage
+                    navigate('/'); 
                 });
             }
         });

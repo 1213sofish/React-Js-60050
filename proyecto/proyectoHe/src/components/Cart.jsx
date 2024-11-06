@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { CartContext } from '../context/CartContext';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
-import Swal from 'sweetalert2';
-import '../styles/cart.css';
+import React, { useContext } from "react"
+import { CartContext } from '../context/CartContext'
+import { useNavigate, Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import '../styles/cart.css'
 
 const Cart = () => {
     const { cart, removeFromCart, clearCart, updateCartQuantity } = useContext(CartContext);
@@ -11,7 +11,6 @@ const Cart = () => {
     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const handleCheckout = () => {
-        // Check if the cart is not empty before proceeding to checkout
         if (cart.length === 0) {
             Swal.fire({
                 title: 'Carrito vacío',
@@ -20,7 +19,6 @@ const Cart = () => {
                 confirmButtonText: 'Ok',
             });
         } else {
-            // Navigate to checkout page
             navigate('/checkout');
         }
     };
@@ -59,7 +57,7 @@ const Cart = () => {
             )}
         </div>
     );
-};
+}
 
-export default Cart;
+export default Cart
 

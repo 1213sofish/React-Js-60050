@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const ItemQuantitySelector = ({ addToCart, product }) => {
     const [quantity, setQuantity] = useState(1);
@@ -23,7 +23,7 @@ const ItemQuantitySelector = ({ addToCart, product }) => {
             <button onClick={handleAddToCart}>Agregar al carrito</button>
         </div>
     );
-};
+}
 
-export default ItemQuantitySelector;
+export default ItemQuantitySelector
 

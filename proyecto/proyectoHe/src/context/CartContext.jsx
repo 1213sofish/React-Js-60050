@@ -1,5 +1,7 @@
-import React, { useState, useEffect, createContext } from 'react';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect, createContext } from 'react'
+import Swal from 'sweetalert2'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase/config'
 
 export const CartContext = createContext();
 
@@ -12,7 +14,7 @@ const CartContextProvider = ({ children }) => {
         if (savedCart) {
             setCart(JSON.parse(savedCart));
         }
-    }, []); 
+    }, []);
 
     // Save cart to local storage
     const saveCartToStorage = (newCart) => {
@@ -20,11 +22,16 @@ const CartContextProvider = ({ children }) => {
         setCart(newCart);
     };
 
-    // Add product to cart
+    // Add product to cart from Firebase
     const addToCart = (product) => {
+        if (!product || !product.id) {
+            console.error("Invalid product data:", product);
+            return;
+        }
+        
         const existingProductIndex = cart.findIndex(item => item.id === product.id);
-    
         let updatedCart;
+    
         if (existingProductIndex >= 0) {
             updatedCart = cart.map((item) =>
                 item.id === product.id
@@ -35,10 +42,8 @@ const CartContextProvider = ({ children }) => {
             updatedCart = [...cart, { ...product, quantity: 1 }];
         }
     
-        setCart(updatedCart);
-    
         saveCartToStorage(updatedCart);
-
+        
         Swal.fire({
             icon: 'success',
             title: 'Producto agregado',
@@ -54,7 +59,7 @@ const CartContextProvider = ({ children }) => {
             .map(item =>
                 item.id === productId ? { ...item, quantity: newQuantity } : item
             )
-            .filter(item => item.quantity > 0); // Remove if quantity is 0
+            .filter(item => item.quantity > 0); 
         saveCartToStorage(updatedCart);
     };
 
@@ -66,7 +71,6 @@ const CartContextProvider = ({ children }) => {
 
     // Clear the cart
     const clearCart = () => {
-        console.log("Clearing cart"); // Debug log to verify the call
         setCart([]);
         saveCartToStorage([]);
         Swal.fire({
@@ -83,8 +87,9 @@ const CartContextProvider = ({ children }) => {
             {children}
         </CartContext.Provider>
     );
-};
+}
 
-export default CartContextProvider;
+export default CartContextProvider
+
 
 
